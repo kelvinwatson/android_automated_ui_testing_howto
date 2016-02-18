@@ -11,7 +11,8 @@ public class HelloCalculatorJUnitTest extends ActivityInstrumentationTestCase2<M
      * Required default constructor.
      */
     public HelloCalculatorJUnitTest() {
-        super("com.watsonlogic.hellocalculator", MainActivity.class);
+        //super("com.watsonlogic.hellocalculator", MainActivity.class); DEPRECATED
+        super(MainActivity.class);
     }
 
     public HelloCalculatorJUnitTest(Class<MainActivity> activityClass) {

@@ -23,7 +23,7 @@ public class HelloCalculatorEspressoTest {
 
     @Test
     public void requiredViews() {
-        onView(withText("Hello World!")).check(matches(isDisplayed()));
+        onView(withText("Testing Application")).check(matches(isDisplayed()));
         onView(withId(R.id.toastBtn));
         onView(withId(R.id.toastBtn)).perform(click());
     }
