@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Android Testing Step 1, How-To Guide</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Android Testing How-To Guide</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span> Guide <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">The Guide</li>
+                <li><a href="step1.html">Step 1: Getting Started</a></li>
+                <li><a href="step2.html">Step 2: Installation</a></li>
+                <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
+                <li><a href="step4.html">Step 4: Espresso (UI Integration Testing)</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Other</li>
+                <li><a href="ref.html">References/Further Reading</a></li>
+                <li><a href="auth.html">About the webpage author</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="auth.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Getting Started with Android Testing</h1>
+          
+          <h2>Why should we test our Android applications?</h2>
+          <p>As of February 18, 2016, there are 1,999,282 Android applications available for download on Google Play.
+          Formerly known as the Android Market, the Google Playstore is the central hub for applications for the Android operating system. There were 50 billion downloads as of July 2013. Currently, the number of applications in the Google Playstore exceeds
+          that in the Apple App Store. Since August 2015, there has been consistently over 40,000 Android applications published per month.</p>
+          <p>The above is clearly an indication of the sheer volume of Android application consumption in the general public, and should serve as motivation to test our Android applications thoroughly to ensure positive user experiences.</p>
+          <a id="rest"></a><img class="img-responsive" src="images/webAPI.png" alt="howAWebAPIWorks">
+          
+          <h2>RESTful API's</h2>
+          <p>Dailymed's API is a RESTful web service. REST, which stands for "Representational State Transfer," consists of architectural design principles for building scalable web services which emphasize the properties of performance, scalability, reliability, portability, maintainability to name a few. REST is protocol-independent, but RESTful systems (systems built on the constraints of REST) use HTTP as its underlying protocol to communicate between the client and the server. Thus, there are several methods used to interact with representations of resources. These include the following:
+          <ul>
+            <li>GET: retrieve a resource without modifying, safe, read-only</li>
+            <li>POST: create a resource </li> 
+            <li>PUT: modify/update a resource</li> 
+            <li>DELETE: delete a resource</li> 
+          </ul>
+          REST proposes specific contraints to yield these properties.<br><br>
+          <dl class="dl-horizontal">
+            <dt>Client VS server</dt>
+            <dd>Clients should not have to worry about data storage, and servers should not have to worry about user interfaces.</dd>
+            <dt>Statelessness</dt>
+            <dd>Each request:response pair is independent of the last and must contain all information necessary for interpreting the request, and the server does not have to keep session information about previous requests.</dd>
+            <dt>Cacheability</dt>
+            <dd>The API should clearly define whether or not its responses can be cached so that the client knows whether or not it can be reused.</dd>
+            <dt>Layered system</dt>
+            <dd>Intermediary servers improve scalability. Layered systems restrict the client to interfacing with a single layer of the layered system, reducing system complexity.</dd>
+            <dt>Uniform interface</dt>
+            <dd>Interface is consistent between components and allows separation of interface from implementation.</dd>
+          </dl>
+          <p>A RESTful web service consists of the following basic components:
+          <ul>
+            <li>base URI (Uniform Resource Identifer): This is the entry point to the API</li>
+            <li>media type/resource representation, usually JSON or XML</li>
+            <li>HTTP method, such as GET, PUT, POST, or DELETE</li>
+          </ul>
+          
+          <h2>What is DailyMed?</h2> 
+          <p>Now that you understand what a web API is, let's talk about DailyMed. DailyMed provides access to package inserts (also known as drug labels) for FDA-approved medications, and is maintained by the U.S. National Library of Medicine (NLM). Contents of DailyMed are updated on a daily basis (hence the name).</p>
+
+          <a id="unit"></a><h2>Unit Testing</h2>
+          <table class="table" border="1">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>DailyMed Specifics</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tr>
+              <th>Base URI</th>
+              <td>Version 1: http://dailymed.nlm.nih.gov/dailymed/services/<br>
+                  Version 2: http://dailymed.nlm.nih.gov/dailymed/services/v2/</td>
+              <td>DailyMed lists two URI versions in their documentation, but it appears that all of the resources are on version 2. Therefore, select version 2.</td>
+            </tr>
+            <tr>
+              <th>Resource representation</th>
+              <td>JSON/XML</td>
+              <td>The DailyMed web service can return JSON or XML. Some resources only return XML.</td>
+            </tr>
+            <tr>
+              <th>HTTP method</th>
+              <td>GET</td>
+              <td>Because the intent of this API is to retrieve/return data without modification, GET is the only method supported.</td>
+            </tr>
+          </table>
+
+          <a id="integrate"></a><h2>Integration Testing</h2>
+          
+          <p>Now that you understand the basics of REST and API's, we are ready to make our first call.</p>
+          <h2><a href="step2.html">&raquo; Proceed to Step 2: Calling the API with PHP</a></h2>
+        </div>
+        <div class="col-md-4">
+          <div id="sideMenu" style="font-family: Arial, sans-serif;">
+            <div class="panel list-group">
+              <a href="step1.html" class="list-group-item" style="background: #222; color:#fff;">STEP 1: Getting Started</span></a>
+              <a href="step1.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Why test your Android application?</a>
+              <a href="step1.html#unit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Unit Testing</a>
+              <a href="step1.html#integrate" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Integration and UI Testing</a>
+              <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
+              <a href="step2.html#junit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
+              <a href="step2.html#junit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
+              <a href="step2.html#espresso" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
+              <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
+              <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JSON Arrays in PHP</a>
+              <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Converting a XML String to a JSON Array</a>
+              <a href="step3.html#subIt" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Iterating over a JSON Array</a>
+              <a href="step3.html#subRec" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Recursive Iterators</a>
+              <a href="step3.html#subAcc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Accessing Elements in a Multidimensional Array</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: UI Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting in Plain Text</a>
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting to HTML</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <p class="navbar-text pull-left">Kelvin Watson (OSU ID 932540242)</p>
+        </div>
+      </div>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

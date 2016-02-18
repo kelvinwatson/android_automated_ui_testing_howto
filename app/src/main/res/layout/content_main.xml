@@ -13,7 +13,7 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/testingApplicationTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Testing Application"
@@ -26,9 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="toastBtn"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_below="@+id/testingApplicationTV"
+        android:layout_alignLeft="@+id/testingApplicationTV"
+        android:layout_alignStart="@+id/testingApplicationTV" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
