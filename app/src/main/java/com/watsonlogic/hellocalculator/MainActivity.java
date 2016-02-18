@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         return "I am a mock function";
     }
 
+    protected int addIntegers(int[] arr){
+        int result=0;
+        for(int i=0; i<arr.length; i++){
+            result+=arr[i];
+        }
+        return result;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

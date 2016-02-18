@@ -7,19 +7,21 @@ import org.junit.Test;
 public class HelloCalculatorJUnitTest extends ActivityInstrumentationTestCase2<MainActivity> {
     MainActivity ma;
 
+    /**
+     * Required default constructor.
+     */
     public HelloCalculatorJUnitTest() {
         super("com.watsonlogic.hellocalculator", MainActivity.class);
-    }
-
-    public HelloCalculatorJUnitTest(Class<MainActivity> activityClass, MainActivity ma) {
-        super(activityClass);
-        this.ma = ma;
     }
 
     public HelloCalculatorJUnitTest(Class<MainActivity> activityClass) {
         super(activityClass);
     }
 
+    public HelloCalculatorJUnitTest(Class<MainActivity> activityClass, MainActivity ma) {
+        super(activityClass);
+        this.ma = ma;
+    }
 
     @Override
     protected void setUp() throws Exception {
