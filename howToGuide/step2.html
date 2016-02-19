@@ -82,8 +82,9 @@
           <p>You are now ready to create local and instrumentation JUnit tests. Before we write our first test, let's set up the Espresso API so that we have it on hand for our UI tests.</p>
           <aside>As an aside, if you're not familiar with dependencies, they are basically Android (Java) JAR files that the project requires. You can think of dependencies as  [8][9]</aside>
           <a id="es"></a><h2>Espresso API</h2>
-          <p>Personally, I found the documentation on Espresso API website inadequate in that there were dependency and Gradle build issues when I followed the setup instructions 
-          for which support was nowhere to be found on the <a href="https://google.github.io/android-testing-support-library/docs/espresso/" target="_blank">Android Testing Support Library</a> website.</p>
+          <p>Personally, I found the documentation on Espresso API website inadequate. During the setup process, I encountered several dependency and Gradle build issues, even when I followed the setup instructions 
+          verbatim. Support for these installation issues was nowhere to be found on the <a href="https://google.github.io/android-testing-support-library/docs/espresso/" target="_blank">Android Testing Support Library</a> website. 
+          Because of said issues, it is my opinion that the official documentation is lacking in terms of support for errors during setup.</p>
           <p>As suggested in the official documentation, add the following dependencies in the same build.gradle (Module:app) as before when we set up JUnit. You can use either single or double quotes for the dependency.</p>
           <pre><code data-language="java">dependencies {
   androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.1"
@@ -108,20 +109,35 @@
           <pre><code data-language="java">testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"</code></pre></p>
 
           <p>Your gradle.build (Module:app) file should look something like this: 
-          <pre><code data-language="java">defaultConfig {
+          <pre><code data-language="java">apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22"
+
+    defaultConfig {
         applicationId "com.my.awesome.app"
         minSdkVersion 10
         targetSdkVersion 22.0.1
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }</code></pre>At this point, the official documentation shows the following example of the build.gradle file, which implies that everything should be correctly setup. However, we will see later when we try to write and run our tests that we will
-    encounter some difficulty.</p>
+    }
+}
 
-<p>Because of these issues, it is my opinion that the official documentation is lacking in terms of support for errors during setup.</p>
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    // App's dependencies, including test
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+    // Testing-only dependencies
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+}</code></pre>At this point, the official documentation shows the following example of the build.gradle file, which implies that everything should be correctly setup. However, we will see later when we try to write and run our tests that we will
+    encounter some difficulty. But, have no fear, in Step 3, I will show you how to fix all of these issues so we can be up and running!</p> 
+
           
-          <p>Now that you understand the basic testing concepts, we are ready to start installing the required dependencies.</p>
-          <h2><a href="step2.html">&raquo; Proceed to Step 2: Setting up your environment</a></h2>
+          <h2><a href="step2.html">&raquo; Proceed to Step 3: Unit Testing with JUnit</a></h2>
         </div>
         <div class="col-md-4">
           <div id="sideMenu" style="font-family: Arial, sans-serif;">
