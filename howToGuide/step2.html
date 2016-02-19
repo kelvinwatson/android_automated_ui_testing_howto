@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Android Testing Step 1, How-To Guide</title>
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/syntaxtheme.css">
     </head>
 
   <body>
@@ -67,7 +68,12 @@
          
           <a id="ju"></a><h2>JUnit Installation</h2>
           <p>If you've completed installation of Android Studio, you should not have to perform any additional steps to include JUnit. This is because as of version 1.2, JUnit testing is 
-          <a href="http://tools.android.com/tech-docs/unit-testing-support">no longer experimental, and is now built in to Android Studio has incorporated JUnit testing support.</p>
+          <a href="http://tools.android.com/tech-docs/unit-testing-support">no longer experimental</a>, and is now 
+          <a href="https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/">fully supported</a> by Android Studio.</p>
+          
+          <pre><code data-language="java">dependencies {
+  testCompile "junit:junit:4.12"
+}</code></pre>
           
           
 
@@ -120,5 +126,8 @@
       </div>
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/rainbow.min.js"></script>
+<script src="js/generic.js"></script>
+<script src="js/java.js"></script
   </body>
 </html>
