@@ -69,19 +69,30 @@
           <a id="ju"></a><h2>JUnit Installation</h2>
           <p>If you've completed installation of Android Studio, you should not have to perform any additional steps to include JUnit. This is because as of version 1.2, JUnit testing is 
           <a href="http://tools.android.com/tech-docs/unit-testing-support">no longer experimental</a>, and is now 
-          <a href="https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/">fully supported</a> by Android Studio.</p>
-          
+          <a href="https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/">fully supported</a> by Android Studio. [6][7]</p>
+          <div class="row">
+            <div class="col-md-5"><img class="img-responsive" src="images/gradle.jpg"></div>
+            <div class="col-md-7">Double click on build.gradle (Module:app) under Gradle Scripts, as shown in the screen capture.</div>
+          </div>
+          <br><p>Then, double check that the following JUnit dependency is included.</p>
           <pre><code data-language="java">dependencies {
   testCompile "junit:junit:4.12"
 }</code></pre>
           
-          
-
+          <p>You are now ready to create local and instrumentation JUnit tests. Before we write our first test, let's set up the Espresso API so that we have it on hand for our UI tests.</p>
+          <aside>As an aside, if you're not familiar with dependencies, they are basically Android (Java) JAR files that the project requires. You can think of dependencies as  [8][9]</aside>
           <a id="es"></a><h2>Espresso API</h2>
           <p>Personally, I found the documentation on Espresso inadequate in that there were many dependency and Gradle build issues when I followed the setup instructions on the <a href="https://google.github.io/android-testing-support-library/docs/espresso/" target="_blank">Android Testing Support Library</a> website.</p>
           <p></p>
           <ol>
-            <li></li>
+            <li>As suggested in the official documentation, add the following dependencies in the same build.gradle (Module:app) as before when we set up JUnit. You can use either single or double quotes for the 
+          <pre><code data-language="java">dependencies {
+  androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.1"
+  androidTestCompile "com.android.support.test:runner:0.4.1"
+}</code></pre>
+
+            
+            </li>
             <li></li>
             <li></li>
             <li></li>
