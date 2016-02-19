@@ -1,9 +1,11 @@
 package com.watsonlogic.hellocalculator;
 
 import android.test.ActivityInstrumentationTestCase2;
-
 import org.junit.Test;
 
+/**
+ * JUnit Instrumentation test (invokes emulator)
+ */
 public class HelloCalculatorJUnitTest extends ActivityInstrumentationTestCase2<MainActivity> {
     MainActivity ma;
 

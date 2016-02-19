@@ -7,6 +7,9 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
+/**
+ * JUnit test that does NOT invoke emulator
+ */
 @SmallTest
 public final class HelloCalculatorJUnitTestDNE {
 
@@ -16,7 +19,6 @@ public final class HelloCalculatorJUnitTestDNE {
     public void setUp() throws Exception {
         ma = new MainActivity();
     }
-
 
     @Test
     public void testAddIntegers() {

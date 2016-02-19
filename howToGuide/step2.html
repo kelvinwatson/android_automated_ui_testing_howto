@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Android Testing How-To Guide</title>
+    <title>Android Testing Step 1, How-To Guide</title>
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
-  </head>
+    </head>
+
   <body>
+
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -22,7 +22,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span> Guide <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -48,29 +48,44 @@
     <div class="container"> 
       <div class="row">
         <div class="col-md-8">
-          <div class="jumbotron" id="bgImg">
-            <div id="opaqueBg" style="font-family: 'Open Sans', sans-serif;">
-              <h1>Android Testing<br></h1><h2>A How-To Guide</h2>
-              <p>This guide will show you how to test an Android application using JUnit and Espresso</p>
-            </div>
-          </div>
-            <dl>
-              <dt>Why did I write this how-to guide?</dt>
-              <dd>While the Android Developer documentation covers testing concepts, it can be daunting and difficult to correctly set up the testing environment due to various issues with dependencies and versions.
-              I have found that there is little guidance provided for beginners to Android development and testing, leading to frustration.
-              <dt><br>Features</dt>
-              <dd>This is a how-to guide on testing Android applications. It includes steps on the installation, writing, and execution of tests using: 
-              <ul>
-                <li><img style="max-height:1em;" src="images/junit-logo.png"> JUnit for unit testing</li>
-                <li><img style="max-height:1.5em;" src="images/espresso-logo.png"> Espresso API for integration testing of the UI</li>
-              </ul></dd>
-              <dt>Documentation</dt>
-              <dd>Where appropriate, this guide will link to official documentation to provide background information.<br><br></dd>
-              <dt>Requirements</dt>
-              <dd>This guide assumes basic knowledge of native Android development in Android Studio, 
-              but assumes no experience in setting up JUnit and Espresso in Android Studio, or testing an Android application.<br><br></dd>
-            </dl>
-            <p><a href="step1.html" class="btn btn-primary">Let's Get Started &raquo;</a></p>
+          <h1>Setting Up Your Environment</h1>
+          
+          <h2>Android Studio Installation</h2>
+          <p>If you haven't already done so, please <a href="http://developer.android.com/sdk/index.html" target="_blank">download</a> Android Studio from the Android Developers website, and follow the 
+          <a href="http://developer.android.com/sdk/installing/index.html?pkg=studio" target="_blank">installation instructions</a>. At the time of writing this guide, the latest version was 1.5.1. 
+          Because this guide focuses on setting up the test environment and writing tests, I will not describe Android Studio installation in detail, and defer to the 
+          <a href="http://developer.android.com/sdk/installing/index.html?pkg=studio" target="_blank">Android Developers guide</a>. </p>
+         
+          <p>Note that I performed all of the steps in this guide using the Windows version of Android Studio.</p>
+          <p>I have not personally used Android Studio on Mac OS, but I have used it on both Windows and Linux. The only difference that I am aware of is that Windows and Mac OS use Intel HAXM 
+          (Hardware Accelerated Execution Manager) for the Android AVD (Virtual Device)'s hardware acceleration, whereas Linux uses KVM (Kernel-based Virtual Machine). The significance of this is that the 
+          Android <strong>AVD (emulator) will not run on Linux without KVM</strong>, but Intel HAXM is optional for Windows and Mac OS. 
+          I encountered this issue with KVM when I tried to run the AVD in a Ubuntu VM, where hardware acceleration is not supported. 
+            
+          
+          <p></p>
+         
+          <a id="ju"></a><h2>JUnit Installation</h2>
+          <p>If you've completed installation of Android Studio, you should not have to perform any additional steps to include JUnit. This is because as of version 1.2, JUnit testing is 
+          <a href="http://tools.android.com/tech-docs/unit-testing-support">no longer experimental, and is now built in to Android Studio has incorporated JUnit testing support.</p>
+          
+          
+
+          <a id="es"></a><h2>Espresso API</h2>
+          <p>Personally, I found the documentation on Espresso inadequate in that there were many dependency and Gradle build issues when I followed the setup instructions on the <a href="https://google.github.io/android-testing-support-library/docs/espresso/" target="_blank">Android Testing Support Library</a> website.</p>
+          <p></p>
+          <ol>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ol>
+          
+          
+          <p>Now that you understand the basic testing concepts, we are ready to start installing the required dependencies.</p>
+          <h2><a href="step2.html">&raquo; Proceed to Step 2: Setting up your environment</a></h2>
         </div>
         <div class="col-md-4">
           <div id="sideMenu" style="font-family: Arial, sans-serif;">
@@ -79,7 +94,7 @@
               <a href="step1.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Why test your Android application?</a>
               <a href="step1.html#unit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Unit Testing</a>
               <a href="step1.html#integrate" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Integration and UI Testing</a>
-              <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
+              <a href="step2.html" class="list-group-item" style="background: #222; color:#CCFB5D;">STEP 2: Setting Up Your Environment<span class="glyphicon glyphicon-asterisk pull-right"></span></a>
               <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
               <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
               <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
@@ -96,12 +111,13 @@
           </div>
         </div>
       </div>
+    </div>
+
       <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
-          <p class="navbar-text pull-left">Kelvin Watson (ONID: watsokel)</p>
+          <p class="navbar-text pull-left">Kelvin Watson (OSU ID 932540242)</p>
         </div>
       </div>
-    </div>
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
   </body>
