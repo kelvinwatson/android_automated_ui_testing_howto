@@ -1,10 +1,8 @@
 package com.watsonlogic.hellocalculator;
 
 import android.test.suitebuilder.annotation.SmallTest;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
 /**

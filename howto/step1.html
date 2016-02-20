@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Android Testing Step 1, How-To Guide</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a style="color:#CCFB5D" class="navbar-brand" href="index.html">Android Testing How-To Guide</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span> Guide <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">The Guide</li>
+                <li><a href="step1.html">Step 1: Getting Started</a></li>
+                <li><a href="step2.html">Step 2: Installation</a></li>
+                <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
+                <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Other</li>
+                <li><a href="ref.html">References/Further Reading</a></li>
+                <li><a href="auth.html">About the webpage author</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="auth.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Getting Started with Android Testing</h1>
+          
+          <h2>Why should we test our Android applications?</h2>
+          <p>As of February 18, 2016, there are 1,999,282 Android applications available for download on Google Play.
+          Formerly known as the Android Market, the Google Playstore is the central hub for applications for the Android operating system. There were 50 billion downloads as of July 2013. Currently, the number of applications in the Google Playstore exceeds
+          that in the Apple App Store. Since August 2015, there has been consistently over 40,000 Android applications published per month. [1][2][3]</p>
+         
+          <a id="junit"></a><figure class="figure"><img class="img-responsive" src="images/stats.jpg" alt="graph showing Android applications published monthly"><figcaption class="figure-caption text-left">Number of android applications published consistently exceeds 40,000 per month since August 2015.<br>Source: <a href="http://www.appbrain.com/stats/number-of-android-apps" target="_parent">appbrain</a></figcaption></figure>
+         
+          <p>The above is clearly an indication of the sheer volume of Android application consumption in the general public, and should serve as motivation to test our Android applications thoroughly to ensure positive user experiences. 
+          To quote the computer scientist Edsger Dijkstra: [4]</p>
+          <blockquote class="blockquote-reverse">Testing shows the presence, not the absence of bugs
+          <footer>Edsger Wybe Dijkstra</a></footer></blockquote> 
+          <p>Although we can't eliminate all bugs, testing can increase our confidence that our applications are performing correctly.</p>
+         
+          <a id="unit"></a><h2>Unit Testing</h2>
+          <p>Unit testing is checking logical components (methods, classes etc) of an application in isolation. Testing individual components thoroughly can help ensure these parts work correctly before considering their interaction with other components.</p>
+          <p>In Android, you can perform unit tests locally, or as instrumented unit tests. The following describes the difference between these two types of unit tests:</p>
+          <dl class="dl-horizontal">
+            <dt>Local unit tests</dt>
+            <dd>These unit tests are independent of the user interface components, and thus do not invoke the Android AVD (virtual device/emulator) or physical device. This means that these tests run quickly.</dd>
+            <dt>Instrumented unit tests</dt>
+            <dd>Unlike local unit tests, instrumented unit tests need to invoke an Android device because they test the Android UI. When you run these tests, you will be prompted to open either an emulator or a physical device. [5]</dd>
+          </dl>
+          
+
+          <a id="integrate"></a><h2>Integration and Automated UI Testing</h2>
+          <p>Manually testing our applications can be a tedious task. Not only is it inefficient, but it is conceivable to miss entire sets of interactions, leading to 
+          superficial and incomplete testing of our app. 
+          Instead, we can automate the process of interacting with UI elements. Such interactions include tapping, scrolling, flicking etc. To accomplish this, we will use the 
+          Espresso API to simulate user interaction with UI elements.</p>
+          <p></p>
+          
+          
+          
+          <p>Now that you understand the basic testing concepts, we are ready to start installing the required dependencies.</p>
+          <h2><a href="step2.html">&raquo; Proceed to Step 2: Setting up your environment</a></h2>
+        </div>
+        <div class="col-md-4">
+          <div id="sideMenu" style="font-family: Arial, sans-serif;">
+            <div class="panel list-group">
+              <a href="step1.html" class="list-group-item" style="background: #222;color:#CCFB5D;">STEP 1: Getting Started</span><span class="glyphicon glyphicon-asterisk pull-right"></span></a>
+              <a href="step1.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Why test your Android application?</a>
+              <a href="step1.html#unit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Unit Testing</a>
+              <a href="step1.html#integrate" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Integration and UI Testing</a>
+              <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
+              <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
+              <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
+              <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
+              <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
+              <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
+              <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: UI Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting in Plain Text</a>
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting to HTML</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <p class="navbar-text pull-left">Kelvin Watson (OSU ID 932540242)</p>
+        </div>
+      </div>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

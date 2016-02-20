@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Android Testing Step 1, How-To Guide</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/syntaxtheme.css">
+    </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a style="color:#CCFB5D" class="navbar-brand" href="index.html">Android Testing How-To Guide</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span> Guide <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">The Guide</li>
+                <li><a href="step1.html">Step 1: Getting Started</a></li>
+                <li><a href="step2.html">Step 2: Installation</a></li>
+                <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
+                <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Other</li>
+                <li><a href="ref.html">References/Further Reading</a></li>
+                <li><a href="auth.html">About the webpage author</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="auth.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Setting Up Your Environment</h1>
+          
+          <h2>Android Studio Installation</h2>
+          <p>If you haven't already done so, please <a href="http://developer.android.com/sdk/index.html" target="_blank">download</a> Android Studio from the Android Developers website, and follow the 
+          <a href="http://developer.android.com/sdk/installing/index.html?pkg=studio" target="_blank">installation instructions</a>. At the time of writing this guide, the latest version was 1.5.1. 
+          Because this guide focuses on setting up the test environment and writing tests, I will not describe Android Studio installation in detail, and defer to the 
+          <a href="http://developer.android.com/sdk/installing/index.html?pkg=studio" target="_blank">Android Developers guide</a>. </p>
+         
+          <p>Note that I performed all of the steps in this guide using the Windows version of Android Studio.</p>
+          <p>I have not personally used Android Studio on Mac OS, but I have used it on both Windows and Linux. The only difference that I am aware of is that Windows and Mac OS use Intel HAXM 
+          (Hardware Accelerated Execution Manager) for the Android AVD (Virtual Device)'s hardware acceleration, whereas Linux uses KVM (Kernel-based Virtual Machine). The significance of this is that the 
+          Android <strong>AVD (emulator) will not run on Linux without KVM</strong>, but Intel HAXM is optional for Windows and Mac OS. 
+          I encountered this issue with KVM when I tried to run the AVD in a Ubuntu VM, where hardware acceleration is not supported. 
+            
+          
+          <p></p>
+          
+          <h2>Test Project</h2>
+          <p>Before we can set up JUnit and Espresso to begin testing, we need to set up a project that we can perform testing on. For ease of illustration of 
+          concepts in this guide, we'll set up a test project called "HelloCalculator" with a very simple UI.</p>
+          <div class="row">
+            <div class="col-md-9"><figure><img class="img-responsive img-thumbnail" src="images/testproj1.jpg" alt="Start a new project"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-3">Create a new project by selecting to File&#8594;New Project.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-9"><figure><img class="img-responsive" src="images/testproj2.jpg" alt="Select API 16"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-3">Select API 16 for this project.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-9"><figure><img class="img-responsive" src="images/testproj3.jpg" alt="Select Blank Activity"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-3">Select blank activity.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-9"><pre><code data-language="html">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.hellocalculator.MainActivity"
+    tools:showIn="@layout/activity_main"&gt;
+    &lt;TextView
+        android:id="@+id/testingApplicationTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Testing Application"
+        android:layout_alignParentTop="true" /&gt;
+
+    &lt;Button
+        android:id="@+id/toastBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="toastBtn"
+        android:layout_below="@+id/testingApplicationTV"
+        android:layout_alignLeft="@+id/testingApplicationTV"
+        android:layout_alignStart="@+id/testingApplicationTV" /&gt;
+&lt;/RelativeLayout&gt;
+</code></pre></div>
+            <div class="col-md-3">Add the following code to the content_main.xml, which is the layout file for MainActivity.java.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-9"><figure><img class="img-responsive" src="images/testproj4.1.jpg" alt="Select Blank Activity"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-3">Your design layout should now look like this.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-9"><pre><code data-language="java">Button toastBtn = (Button) findViewById(R.id.toastBtn);
+toastBtn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(MainActivity.this, "Clicked Toast Button!", Toast.LENGTH_SHORT).show();
+    }
+});</code></pre></div>
+            <div class="col-md-3">Add the following code to the MainActivity's onCreate() method.</div>
+          </div>
+          
+          
+          <a id="ju"></a><h2>JUnit Installation</h2>
+          <p>If you've completed installation of Android Studio, you should not have to perform any additional steps to include JUnit. This is because as of version 1.2, JUnit testing is 
+          <a href="http://tools.android.com/tech-docs/unit-testing-support">no longer experimental</a>, and is now 
+          <a href="https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/">fully supported</a> by Android Studio. [6][7]</p>
+          
+          <div class="row">
+            <div class="col-md-5">
+              <figure class="figure">
+                <img class="img-responsive" src="images/gradle.jpg" alt="Open gradle.build (Module:app)">
+                <figcaption>Click image to enlarge</figcaption>
+              </figure>
+            </div>
+            <div class="col-md-7">After creating a new project with a blank activity as described above, double click on build.gradle (Module:app) under Gradle Scripts, as shown in the screen capture.</div>
+          </div>
+          <!--define modal-->
+          
+          <br><p>Then, double check that the following JUnit dependency is included.</p>
+          <pre><code data-language="java">dependencies {
+  testCompile "junit:junit:4.12"
+}</code></pre>
+          
+          <p>You are now ready to create local and instrumentation JUnit tests. Before we write our first test, let's set up the Espresso API so that we have it on hand for our UI tests.</p>
+          <aside>As an aside, if you're not familiar with dependencies, they are basically Android (Java) JAR files that the project requires. You can think of dependencies as  [8][9]</aside>
+          <a id="es"></a><h2>Espresso API</h2>
+          <p>Personally, I found the documentation on Espresso API website inadequate. During the setup process, I encountered several dependency and Gradle build issues, even when I followed the setup instructions 
+          verbatim. Support for these installation issues was nowhere to be found on the <a href="https://google.github.io/android-testing-support-library/docs/espresso/" target="_blank">Android Testing Support Library</a> website. 
+          Because of said issues, it is my opinion that the official documentation is lacking in terms of support for errors during setup.</p>
+          <p>As suggested in the official documentation, add the following dependencies in the same build.gradle (Module:app) as before when we set up JUnit. You can use either single or double quotes for the dependency.</p>
+          <pre><code data-language="java">dependencies {
+  androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.1"
+  androidTestCompile "com.android.support.test:runner:0.4.1"
+}</code></pre>
+
+          <p>After following the above instruction, you'll be prompted to perform a sync. Click on <u>Sync Now</u>.
+          <img class="img-responsive" src="images/sync.jpg"></p>
+          
+          <p>At this point, I encountered an error which was not noted in the official documentation: 
+          <pre><span class="red">Warning:Conflict with dependency 'com.android.support:support-annotations'. Resolved versions for app (23.1.1) and test app (23.0.1) differ. See http://g.co/androidstudio/app-test-app-conflict for details.</span></pre></p>
+                    
+          <p>Why are we seeing this error message? This error indicates a conflict between your application's APK and the test application's APK. <em>(APK stands for Android application package, which is the file that's distributed for installation on Android devices. When you're finished
+          developing your app, you would build an APK file for distribution)</em> [10]. Because both your app APK and test APK must use the same version of the Android API. So, if I look in the lines within dependencies, I will see the following line:
+          <pre><code data-language="java">compile "com.android.support:appcompat-v7:23.1.1"</code></pre> This is a hint to use version 23.1.1 in my support annotations.
+
+          <p>To resolve this conflict, I added the following dependency:
+          <pre><code data-language="java">androidTestCompile "com.android.support:support-annotations:23.1.1"</code></pre>Not surprisingly, this fixes the issue!
+          </p>
+
+          <p>Next, the official documentation requests that you add this under the defaultConfig bracket:
+          <pre><code data-language="java">testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"</code></pre></p>
+
+          <p>Your gradle.build (Module:app) file should look something like this: 
+          <pre><code data-language="java">apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22"
+
+    defaultConfig {
+        applicationId "com.my.awesome.app"
+        minSdkVersion 10
+        targetSdkVersion 22.0.1
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    // App's dependencies, including test
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+    // Testing-only dependencies
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+}</code></pre>At this point, the official documentation shows the following example of the build.gradle file, which implies that everything should be correctly setup. However, we will see later when we try to write and run our tests that we will
+    encounter some difficulty. But, have no fear, in Step 3, I will show you how to fix all of these issues so we can be up and running!</p> 
+
+          
+        <h2><a href="step3.html">&raquo; Proceed to Step 3: Unit Testing with JUnit</a></h2>
+        </div>
+        <div class="col-md-4">
+          <div id="sideMenu" style="font-family: Arial, sans-serif;">
+            <div class="panel list-group">
+              <a href="step1.html" class="list-group-item" style="background: #222; color:#fff;">STEP 1: Getting Started</span></a>
+              <a href="step1.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Why test your Android application?</a>
+              <a href="step1.html#unit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Unit Testing</a>
+              <a href="step1.html#integrate" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Integration and UI Testing</a>
+              <a href="step2.html" class="list-group-item" style="background: #222; color:#CCFB5D;">STEP 2: Setting Up Your Environment<span class="glyphicon glyphicon-asterisk pull-right"></span></a>
+              <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
+              <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
+              <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
+              <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
+              <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
+              <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: UI Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting in Plain Text</a>
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting to HTML</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  
+    <div class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <p class="navbar-text pull-left">Kelvin Watson (OSU ID 932540242)</p>
+      </div>
+    </div>
+
+  <div class="modal fade" id="iModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div style="width:80%;" class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" id="mimg" src="">
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+    
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/rainbow.min.js"></script>
+<script src="js/generic.js"></script>
+<script src="js/java.js"></script>
+<script>
+$(window).load(function(){
+  $('img').on('click',function(){
+      var sr=$(this).attr('src');
+      var al=$(this).attr('alt');
+      $('#myModalLabel').text(al);      
+      $('#mimg').attr('src',sr);
+      $('#iModal').modal('show');
+  });
+});
+</script>
+  </body>
+</html>

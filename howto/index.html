@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Android Testing How-To Guide</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a style="color:#CCFB5D" class="navbar-brand" href="index.html">Android Testing How-To Guide</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span> Guide <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">The Guide</li>
+                <li><a href="step1.html">Step 1: Getting Started</a></li>
+                <li><a href="step2.html">Step 2: Installation</a></li>
+                <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
+                <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Other</li>
+                <li><a href="ref.html">References/Further Reading</a></li>
+                <li><a href="auth.html">About the webpage author</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="auth.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-8">
+          <div class="jumbotron" id="bgImg">
+            <div id="opaqueBg" style="font-family: 'Open Sans', sans-serif;">
+              <h1>Android Testing<br></h1><h2>A How-To Guide</h2>
+              <p>This guide will show you how to test an Android application using JUnit and Espresso</p>
+            </div>
+          </div>
+            <dl>
+              <dt>Why did I write this how-to guide?</dt>
+              <dd>I wrote this guide for a couple of important reasons.<br><br>
+              
+              While the Android Developer and Android Testing Support library websites provide some documentation 
+              for setup and testing concepts, they neglect to provide support on how to deal with various issues with dependencies and versions that arise during
+              installation, even if their setup instructions are followed exactly. This is why I found the current official documentation lacking in terms of 
+              troubleshooting during set up of the testing environment, which can lead to frustration, especially if the developer is eager to get up and running 
+              and start writing tests for their application. It can be annoying for developers when they find only minimal troubleshooting information and sometimes 
+              obscure error messages. Because good documentation does not currently exist for helping a developer deal with these issues to get up and running, I 
+              wrote this guide to hopefully fill that gap.<br><br>
+
+              I have found that there is little guidance provided for beginners to Android development and testing. Much of the existing documentation assumes
+              working knowledge of how to write tests for Android applications. This is a great opportunity to review the basics of writing unit tests, and 
+              provide some exposure to automated UI and integration testing. Thus, another goal of this guide is to help developers quickly get started
+              on writing quality tests for their Android apps.
+              <dt><br>Features</dt>
+              <dd>This is a how-to guide on testing Android applications. It includes steps on the installation, writing, and execution of tests using: 
+              <ul>
+                <li><img style="max-height:1em;" src="images/junit-logo.png"> JUnit for unit testing</li>
+                <li><img style="max-height:1.5em;" src="images/espresso-logo.png"> Espresso API for integration testing of the UI</li>
+              </ul></dd>
+              <dt>Documentation</dt>
+              <dd>Where appropriate, this guide will link to official documentation to provide background information.<br><br></dd>
+              <dt>Requirements</dt>
+              <dd>This guide assumes basic knowledge of native Android development in Android Studio, 
+              but assumes no experience in setting up JUnit and Espresso in Android Studio, or testing an Android application.<br><br></dd>
+            </dl>
+            <p><a href="step1.html" class="btn btn-primary">Let's Get Started &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <div id="sideMenu" style="font-family: Arial, sans-serif;">
+            <div class="panel list-group">
+              <a href="step1.html" class="list-group-item" style="background: #222; color:#fff;">STEP 1: Getting Started</span></a>
+              <a href="step1.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Why test your Android application?</a>
+              <a href="step1.html#unit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Unit Testing</a>
+              <a href="step1.html#integrate" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Integration and UI Testing</a>
+              <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
+              <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
+              <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
+              <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
+              <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
+              <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
+              <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: UI Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting in Plain Text</a>
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting to HTML</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <p class="navbar-text pull-left">Kelvin Watson (ONID: watsokel)</p>
+        </div>
+      </div>
+    </div>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
