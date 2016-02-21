@@ -16,143 +16,157 @@
         android:id="@+id/testingApplicationTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Testing Application"
+        android:layout_alignEnd="@+id/eightBtn"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/eightBtn"
-        android:layout_alignEnd="@+id/eightBtn" />
+        android:text="Testing Application" />
 
     <Button
         android:id="@+id/toastBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="toastBtn"
-        android:layout_below="@+id/testingApplicationTV"
         android:layout_alignLeft="@+id/testingApplicationTV"
-        android:layout_alignStart="@+id/testingApplicationTV" />
+        android:layout_alignStart="@+id/testingApplicationTV"
+        android:layout_below="@+id/testingApplicationTV"
+        android:text="toastBtn" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
         android:id="@+id/oneBtn"
-        android:layout_marginBottom="88dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/twoBtn"
-        android:layout_toStartOf="@+id/twoBtn" />
-
-    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="88dp"
+        android:layout_toLeftOf="@+id/twoBtn"
+        android:layout_toStartOf="@+id/twoBtn"
+        android:text="1" />
+
+    <Button
         android:id="@+id/twoBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/fourBtn"
         android:layout_toLeftOf="@+id/threeBtn"
-        android:layout_toStartOf="@+id/threeBtn" />
+        android:layout_toStartOf="@+id/threeBtn"
+        android:text="2" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
         android:id="@+id/threeBtn"
-        android:layout_below="@+id/fiveBtn"
-        android:layout_centerHorizontal="true" />
-
-    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4"
+        android:layout_below="@+id/fiveBtn"
+        android:layout_centerHorizontal="true"
+        android:text="3" />
+
+    <Button
         android:id="@+id/fourBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/oneBtn"
         android:layout_alignLeft="@+id/oneBtn"
-        android:layout_alignStart="@+id/oneBtn" />
+        android:layout_alignStart="@+id/oneBtn"
+        android:text="4" />
 
     <Button
+        android:id="@+id/fiveBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5"
-        android:id="@+id/fiveBtn"
         android:layout_above="@+id/twoBtn"
         android:layout_alignLeft="@+id/twoBtn"
-        android:layout_alignStart="@+id/twoBtn" />
+        android:layout_alignStart="@+id/twoBtn"
+        android:text="5" />
 
     <Button
+        android:id="@+id/sixBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="6"
-        android:id="@+id/sixBtn"
         android:layout_above="@+id/threeBtn"
         android:layout_alignLeft="@+id/threeBtn"
-        android:layout_alignStart="@+id/threeBtn" />
+        android:layout_alignStart="@+id/threeBtn"
+        android:text="6" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="7"
         android:id="@+id/sevenBtn"
-        android:layout_alignTop="@+id/eightBtn"
-        android:layout_alignLeft="@+id/fourBtn"
-        android:layout_alignStart="@+id/fourBtn" />
-
-    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="8"
+        android:layout_alignLeft="@+id/fourBtn"
+        android:layout_alignStart="@+id/fourBtn"
+        android:layout_alignTop="@+id/eightBtn"
+        android:text="7" />
+
+    <Button
         android:id="@+id/eightBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/fiveBtn"
         android:layout_alignLeft="@+id/fiveBtn"
-        android:layout_alignStart="@+id/fiveBtn" />
+        android:layout_alignStart="@+id/fiveBtn"
+        android:text="8" />
 
     <Button
+        android:id="@+id/nineBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="9"
-        android:id="@+id/nineBtn"
         android:layout_above="@+id/sixBtn"
         android:layout_alignLeft="@+id/sixBtn"
-        android:layout_alignStart="@+id/sixBtn" />
+        android:layout_alignStart="@+id/sixBtn"
+        android:text="9" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
         android:id="@+id/plusBtn"
-        android:layout_alignTop="@+id/nineBtn"
-        android:layout_toRightOf="@+id/sixBtn"
-        android:layout_toEndOf="@+id/sixBtn" />
-
-    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="="
+        android:layout_above="@+id/equalsBtn"
+        android:layout_alignTop="@+id/nineBtn"
+        android:layout_toEndOf="@+id/sixBtn"
+        android:layout_toRightOf="@+id/sixBtn"
+        android:text="+" />
+
+    <Button
         android:id="@+id/equalsBtn"
-        android:layout_below="@+id/nineBtn"
-        android:layout_toRightOf="@+id/threeBtn"
-        android:layout_toEndOf="@+id/threeBtn"
-        android:layout_alignBottom="@+id/threeBtn" />
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/plusBtn"
+        android:layout_alignRight="@+id/plusBtn"
+        android:layout_below="@+id/threeBtn"
+        android:layout_toEndOf="@+id/twoBtn"
+        android:layout_toRightOf="@+id/twoBtn"
+        android:text="=" />
 
     <TextView
+        android:id="@+id/answerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/answerView"
         android:layout_above="@+id/sevenBtn"
-        android:layout_alignRight="@+id/plusBtn"
         android:layout_alignEnd="@+id/plusBtn"
-        android:gravity="right"
-        android:background="#006699"
-        android:textColor="#fff"
         android:layout_alignLeft="@+id/sevenBtn"
-        android:layout_alignStart="@+id/sevenBtn" />
+        android:layout_alignRight="@+id/plusBtn"
+        android:layout_alignStart="@+id/sevenBtn"
+        android:background="#006699"
+        android:gravity="right"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#fff" />
+
+    <Button
+        android:id="@+id/zeroBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/oneBtn"
+        android:layout_alignStart="@+id/oneBtn"
+        android:layout_below="@+id/twoBtn"
+        android:layout_toLeftOf="@+id/threeBtn"
+        android:layout_toStartOf="@+id/threeBtn"
+        android:text="0" />
 
 </RelativeLayout>

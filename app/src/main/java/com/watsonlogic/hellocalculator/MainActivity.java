@@ -5,7 +5,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,13 +12,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button one, two, three, four, five, six, seven, eight, nine;
+    Button zero, one, two, three, four, five, six, seven, eight, nine;
     Button plus, equals;
     Button[] numbers;
     TextView answer;
@@ -56,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void getCalculatorReferences(){
+        zero = (Button) findViewById(R.id.zeroBtn);
         one=(Button)findViewById(R.id.oneBtn);
         two=(Button)findViewById(R.id.twoBtn);
         three=(Button)findViewById(R.id.threeBtn);
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void setCalculatorArr(){
-        numbers = new Button[]{one,two,three,four,five,six,seven,eight,nine,plus,equals};
+        numbers = new Button[]{zero, one, two, three, four, five, six, seven, eight, nine, plus, equals};
     }
     protected void setButtonListeners(){
         for(int k=0; k<numbers.length; k++){
@@ -84,13 +83,21 @@ public class MainActivity extends AppCompatActivity {
                         setDisplay("");
                         answerIsShown=false;
                     }
+                    String ai = null;
                     String a = answer.getText().toString();
-                    String ai=null;
-                    try{
-                        Integer.parseInt(a); //if numeric, append to display
-                        ai=a+i;
-                    }catch(NumberFormatException e){ //if not numeric, show current char
+                    if (i.equals("+") || i.equals("=")) {
                         ai=i;
+                    } else {
+                        try {
+                            Integer.parseInt(a); //if numeric, append to display
+                            if (!a.equals("0")) {
+                                ai = a + i;
+                            } else {
+                                ai = i;
+                            }
+                        } catch (NumberFormatException e) { //if not numeric, show current char
+                            ai = i;
+                        }
                     }
                     answer.setText(ai);
                     calculate(i);

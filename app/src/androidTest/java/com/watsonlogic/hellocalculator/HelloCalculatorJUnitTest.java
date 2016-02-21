@@ -1,7 +1,11 @@
 package com.watsonlogic.hellocalculator;
 
 import android.test.ActivityInstrumentationTestCase2;
+
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * JUnit Instrumentation test (invokes emulator)
@@ -34,7 +38,7 @@ public class HelloCalculatorJUnitTest extends ActivityInstrumentationTestCase2<M
 
     @Test
     public void testAddIntegers() {
-        int[] arr = {1, 2, 3};
+        List<Integer> arr = Arrays.asList(1, 2, 3);
         assertEquals(6, ma.addIntegers(arr));
     }
 
