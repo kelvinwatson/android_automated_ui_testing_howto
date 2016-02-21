@@ -115,6 +115,13 @@ public class HelloCalculatorRobolectricTest {
         two.performClick();
         equals.performClick();
         assertThat(answer.getText().toString(), equalTo("211"));
+
+        //+578=578
+        plus.performClick();
+        five.performClick();
+        seven.performClick();
+        eight.performClick();
+        assertThat(answer.getText().toString(), equalTo("578"));
     }
 
     @Test
@@ -139,6 +146,11 @@ public class HelloCalculatorRobolectricTest {
         equals.performClick();
         assertThat(answer.getText().toString(), anyOf(containsString("+"), containsString("="), containsString("err")));
 
-    }
+        //=23+
+        equals.performClick();
+        two.performClick();
+        three.performClick();
+        assertThat(answer.getText().toString(), anyOf(containsString("23"), containsString("+"), containsString("err")));
 
+    }
 }
