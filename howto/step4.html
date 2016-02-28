@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Android Testing Step 1, How-To Guide</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/syntaxtheme.css">
+    </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a style="color:#CCFB5D" class="navbar-brand" href="index.html">Android Testing How-To Guide</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span> Guide <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">The Guide</li>
+                <li><a href="step1.html">Step 1: Getting Started</a></li>
+                <li><a href="step2.html">Step 2: Installation</a></li>
+                <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
+                <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li><a href="step5.html">Step 5: Robolectric (Automated UI Testing)</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Other</li>
+                <li><a href="ref.html">References/Further Reading</a></li>
+                <li><a href="auth.html">About the webpage author</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="auth.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Automated UI Integration Testing with Espresso API</h1>
+          <p>This section covers UI testing using the Espresso API. Manually testing our application can be tedious and incomplete. Programmatically
+          interacting with UI components can result in greater confidence that our application is working properly.<a id="ts"></a></p>
+          
+          <h2>Troubleshooting</h2>
+          <p>In step 1, recall that I mentioned that there are outstanding dependency issues that we haven't dealt with yet. 
+          We will encounter this problem when we write our first test.</p>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/buildvariante.jpg" alt="Go to Build Variants and select Unit Tests as the Test Artifact"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Click on Build Variants and select Android Instrumentation Tests as the Test Artifact.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/espressoclass.jpg" alt="Create a new Java class in the already-created (test) folder in java folder"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Now, create a new Java class called HelloCalculatorEspressoTest.java in the already-created test folder in java folder.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">@RunWith(AndroidJUnit4.class)
+@LargeTest
+public class HelloCalculatorEspressoTest {
+  @Rule
+  public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
+
+  @Test
+  public void requiredViews() {
+    onView(withText("Testing Application")).check(matches(isDisplayed()));
+  }
+}
+</code></pre>
+            </div>
+            <div class="col-md-4">Now, let's write something very simple to get started.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/unabletoresolve.jpg" alt="Cannot resolve withText() or isDisplayed()"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Unfortunately, it isn't clear how to resolve these issues, as IntelliJ doesn't seem to know which libraries to import.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+</code></pre>
+            </div>To fix this, import these two packages.</div>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/runespresso.jpg" alt="Build and run"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Now, build the application Ctrl-F9, then run the tests.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><pre><span class="red">Execution failed for task app:transformResourcesWithMergeJavaResForDebugAndroidTest</span></pre></div>
+            <div class="col-md-4">You should then see this error.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">buildscript {
+  repositories {
+      jcenter()
+  }
+  dependencies {
+      classpath 'com.android.tools.build:gradle:1.3.1'
+  }
+}
+</code></pre><a id="ch"></a></div>
+            <div class="col-md-4">To fix this error, you will need to modify your Project level build.grade file. Revert the gradle from version 1.5.0 to 1.3.1.</div>
+          </div>
+         
+          
+          
+          <h2>Expanding our Project</h2>   
+          
+          <p>Now that we've fixed all of the issues with setup, we need to augment our project a bit before we can write meaningful tests.
+          To do this, let's build a calculator that does simple integer addition. We will start by building the UI:</p>
+       
+          <p>Start by adding the following XML code into your content_main.xml file in your res/layout folder.</p>
+          <pre><code data-language="java">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.hellocalculator.MainActivity"
+    tools:showIn="@layout/activity_main"&gt;
+    &lt;TextView
+        android:id="@+id/testingApplicationTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/eightBtn"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/eightBtn"
+        android:text="Testing Application" /&gt;
+    &lt;Button
+        android:id="@+id/toastBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/testingApplicationTV"
+        android:layout_alignStart="@+id/testingApplicationTV"
+        android:layout_below="@+id/testingApplicationTV"
+        android:text="toastBtn" /&gt;
+    &lt;Button
+        android:id="@+id/zeroBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/oneBtn"
+        android:layout_alignStart="@+id/oneBtn"
+        android:layout_below="@+id/twoBtn"
+        android:layout_toLeftOf="@+id/threeBtn"
+        android:layout_toStartOf="@+id/threeBtn"
+        android:text="0" /&gt;
+    &lt;Button
+        android:id="@+id/oneBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="88dp"
+        android:layout_toLeftOf="@+id/twoBtn"
+        android:layout_toStartOf="@+id/twoBtn"
+        android:text="1" /&gt;
+    &lt;Button
+        android:id="@+id/twoBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fourBtn"
+        android:layout_toLeftOf="@+id/threeBtn"
+        android:layout_toStartOf="@+id/threeBtn"
+        android:text="2" /&gt;
+    &lt;Button
+        android:id="@+id/threeBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fiveBtn"
+        android:layout_centerHorizontal="true"
+        android:text="3" /&gt;
+    &lt;Button
+        android:id="@+id/fourBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/oneBtn"
+        android:layout_alignLeft="@+id/oneBtn"
+        android:layout_alignStart="@+id/oneBtn"
+        android:text="4" /&gt;
+    &lt;Button
+        android:id="@+id/fiveBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/twoBtn"
+        android:layout_alignLeft="@+id/twoBtn"
+        android:layout_alignStart="@+id/twoBtn"
+        android:text="5" /&gt;
+    &lt;Button
+        android:id="@+id/sixBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/threeBtn"
+        android:layout_alignLeft="@+id/threeBtn"
+        android:layout_alignStart="@+id/threeBtn"
+        android:text="6" /&gt;
+    &lt;Button
+        android:id="@+id/sevenBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/fourBtn"
+        android:layout_alignStart="@+id/fourBtn"
+        android:layout_alignTop="@+id/eightBtn"
+        android:text="7" /&gt;
+    &lt;Button
+        android:id="@+id/eightBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fiveBtn"
+        android:layout_alignLeft="@+id/fiveBtn"
+        android:layout_alignStart="@+id/fiveBtn"
+        android:text="8" /&gt;
+    &lt;Button
+        android:id="@+id/nineBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sixBtn"
+        android:layout_alignLeft="@+id/sixBtn"
+        android:layout_alignStart="@+id/sixBtn"
+        android:text="9" /&gt;
+    &lt;Button
+        android:id="@+id/plusBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/equalsBtn"
+        android:layout_alignTop="@+id/nineBtn"
+        android:layout_toEndOf="@+id/sixBtn"
+        android:layout_toRightOf="@+id/sixBtn"
+        android:text="+" /&gt;
+    &lt;Button
+        android:id="@+id/equalsBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/plusBtn"
+        android:layout_alignRight="@+id/plusBtn"
+        android:layout_below="@+id/threeBtn"
+        android:layout_toEndOf="@+id/twoBtn"
+        android:layout_toRightOf="@+id/twoBtn"
+        android:text="=" /&gt;
+    &lt;TextView
+        android:id="@+id/answerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sevenBtn"
+        android:layout_alignEnd="@+id/plusBtn"
+        android:layout_alignLeft="@+id/sevenBtn"
+        android:layout_alignRight="@+id/plusBtn"
+        android:layout_alignStart="@+id/sevenBtn"
+        android:background="#006699"
+        android:gravity="right"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#fff" /&gt;
+&lt;/RelativeLayout&gt;
+</code></pre>
+
+          <div class="row">
+            <div class="col-md-6"><figure><img class="img-responsive" src="images/calculatorUI.jpg" alt="Setting up the calculator UI"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-6">Your calculator UI should look something like this</div>
+          </div>
+          
+          
+          <div class="row">
+            <div class="col-md-10"><pre><code data-language="java">public class MainActivity extends AppCompatActivity {
+  private Button zero, one, two, three, four, five, six, seven, eight, nine;
+  private Button plus, equals;
+  private Button[] numbers;
+  private TextView answer;
+  private String expr;
+  private String prev=null;
+  private boolean answerIsShown=false;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    getCalculatorReferences();
+    setCalculatorArr();
+    setButtonListeners();
+  }
+
+  /* Reference all layout views */
+  protected void getCalculatorReferences(){
+    zero = (Button) findViewById(R.id.zeroBtn);
+    one=(Button)findViewById(R.id.oneBtn);
+    two=(Button)findViewById(R.id.twoBtn);
+    three=(Button)findViewById(R.id.threeBtn);
+    four=(Button)findViewById(R.id.fourBtn);
+    five=(Button)findViewById(R.id.fiveBtn);
+    six=(Button)findViewById(R.id.sixBtn);
+    seven=(Button)findViewById(R.id.sevenBtn);
+    eight=(Button)findViewById(R.id.eightBtn);
+    nine=(Button)findViewById(R.id.nineBtn);
+    plus=(Button)findViewById(R.id.plusBtn);
+    equals=(Button)findViewById(R.id.equalsBtn);
+    answer=(TextView)findViewById(R.id.answerView);
+  }
+
+  /* Place buttons into an array for processing */
+  protected void setCalculatorArr(){
+    numbers = new Button[]{zero, one, two, three, four, five, six, seven, eight, nine, plus, equals};
+  }
+  
+  /* Set all button listeners */
+  protected void setButtonListeners(){
+    for(int k=0; k&lt;numbers.length; k++){
+      final Button b = numbers[k];
+      b.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          String i = b.getText().toString();
+          if(answerIsShown){
+            setDisplay("");
+            answerIsShown=false;
+          }
+          String ai = null;
+          String a = answer.getText().toString();
+          if (i.equals("+") || i.equals("=")) {
+            ai=i;
+          } else {
+            try {
+                Integer.parseInt(a); //if numeric, append
+                if (!a.equals("0")) {
+                    ai = a + i;
+                } else {
+                    ai = i;
+                }
+            } catch (NumberFormatException e){ //print nonnumber
+                ai = i;
+            }
+          }
+          answer.setText(ai);
+          calculate(i);
+        }
+      });
+    }
+  }
+
+  /* Handle button presses */
+  protected void calculate(String pressed){
+    if(pressed.equals("=")) {
+        processEquals();
+    } else if (pressed.equals("+")){
+        processPlus();
+    } else{
+        processNumeric(pressed);
+    }
+  }
+
+  /* Equals sign button behaviour */
+  private void processEquals(){
+    try{
+      if(prev.matches("&#92;&#92;d") &amp;&amp; !prev.equals("=") &amp;&amp; !prev.equals("+")) {
+        List&lt;Integer&gt; ints = generateIntArr(expr);
+        prev=expr=null;
+        int result = addIntegers(ints);
+        setDisplay(String.valueOf(result));
+        answerIsShown=true;
+      }
+    } catch(NullPointerException e){
+      setDisplay("err");
+    }
+  }
+
+  /* Plus sign button behaviour */
+  private void processPlus(){
+    if(prev==null){
+      expr+="0+";
+      prev="+";
+    } else if(prev.matches("&#92;&#92;d") &amp;&amp; !prev.equals("=") &amp;&amp; !prev.equals("+")) {
+      expr += "+"; //append the plus sign
+      prev="+";
+    } else{
+      setDisplay("err");
+    }
+  }
+
+  /* Number button behaviour */
+  private void processNumeric(String n){
+    if(prev==null || !prev.equals("=")){
+        expr = (expr == null) ? n : expr + n;
+        prev=n;
+    }
+  }
+
+  /* Parse mathematical expression, extract integers into an array */
+  protected List&lt;Integer&gt; generateIntArr(String expr){
+    List&lt;Integer&gt; ints = new ArrayList&lt;Integer&gt;();
+    String pend = null;
+    for(int k=0, len=expr.length(); k&lt;len; k++){
+      char c = expr.charAt(k);
+      char next = 'a';
+      if((k+1)&lt;len) {
+        next = expr.charAt(k + 1);
+      }
+      if(Character.isDigit(c) &amp;&amp; Character.isDigit(next)){ 
+        //multi-digit number
+        pend = (pend==null)? String.valueOf(c) : pend+c;        
+      } else if(Character.isDigit(c) &amp;&amp; !Character.isDigit(next)) { 
+        //single digit or end of multidigit
+        if (pend == null) { //single digit
+          ints.add(Character.getNumericValue(c));
+        }else{ //multidigit
+          pend+=c;
+          ints.add(Integer.parseInt(pend));
+          pend=null;
+        }
+      }
+    }
+    return ints;
+  }
+
+  /* Display a string into the the answer textview */
+  protected void setDisplay(String s){
+    answer.setText(s);
+  }
+
+  /* Add a list of integers */
+  protected int addIntegers(List&lt;Integer&gt; arr){
+    int result=0;
+    for(int i=0,len=arr.size(); i&lt;len; ++i){
+        result+=arr.get(i);
+    }
+    return result;
+  }
+}</code></pre>
+            </div>
+            <div class="col-md-2">This code implements the basic functionality of the calculator. Keep in mind that this is a simple calculator that only performs addition.</div>
+          </div>
+          
+          <p><a id="wr"></a></p>
+          
+          <h2>Writing Integration Tests</h2> 
+          
+          <p>Now that we've created our calculator, let's write automated UI tests to ensure that it functions correctly.</p>
+          
+          <div class="row">
+            <div class="col-md-10"><pre><code data-language="java">@Test
+public void checkNumberButtons() {
+  onView(withId(R.id.zeroBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("0")));
+  onView(withId(R.id.oneBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("1")));
+  onView(withId(R.id.twoBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("12")));
+  onView(withId(R.id.threeBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("123")));
+  onView(withId(R.id.fourBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("1234")));
+  onView(withId(R.id.fiveBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("12345")));
+  onView(withId(R.id.sixBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("123456")));
+  onView(withId(R.id.sevenBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("1234567")));
+  onView(withId(R.id.eightBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("12345678")));
+  onView(withId(R.id.nineBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("123456789")));
+}</code></pre></div>
+            <div class="col-md-2">Our first test clicks on all of the number buttons and checks that the answerView textview shows the correct output.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/runningtests.jpg" alt="Run Espresso tests"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">You should see these tests running in the "Run" tab. After the tests are finished, a result is displayed.</div>
+          </div>
+
+          <p>Congratulations, we just ran our first Espresso test. Let's add one more.</p>
+          
+          <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">@Test
+public void checkAddition() {
+  //5+8=13
+  onView(withId(R.id.fiveBtn)).perform(click());
+  onView(withId(R.id.plusBtn)).perform(click());
+  onView(withId(R.id.eightBtn)).perform(click());
+  onView(withId(R.id.equalsBtn)).perform(click());
+  onView(withId(R.id.answerView)).check(matches(withText("13")));
+}</code></pre></div>
+            <div class="col-md-4">Add this code and run this test.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/allespresso.jpg" alt="Run all Espresso tests"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Run all tests by right clicking on the class. You can also run individual tests by right clicking on the code for that test.</div>
+          </div>
+  
+          <p>Congratulations! We have now written unit tests and integration tests. We are now ready to explore the Robolectric API with some additional tests.</p>
+
+          <h2><a href="step5.html">&raquo; Proceed to Step 5: Integration Testing using the Robolectric API</a></h2>
+        
+        </div>
+   
+        <div class="col-md-4">
+          <div id="sideMenu" style="font-family: Arial, sans-serif;">
+            <div class="panel list-group">
+              <a href="step1.html" class="list-group-item" style="background: #222; color:#fff;">STEP 1: Getting Started</span></a>
+              <a href="step1.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Why test your Android application?</a>
+              <a href="step1.html#unit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Unit Testing</a>
+              <a href="step1.html#integrate" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Integration and UI Testing</a>
+              <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
+              <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
+              <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso API Dependencies</a>
+              <a href="step2.html#ro" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Robolectric API Dependencies</a>
+              <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
+              <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
+              <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
+              <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#CCFB5D;">STEP 4: Automated UI Integration Testing with Espresso API<span class="glyphicon glyphicon-asterisk pull-right"></span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Troubleshooting</a>
+              <a href="step4.html#ch" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Expanding the Calculator Project</a>
+              <a href="step4.html#wr" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+              <a href="step5.html" class="list-group-item" style="background: #222; color:#fff;">STEP 5: Automated UI Integration Testing with Robolectric API</span></a>  
+              <a href="step5.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <p class="navbar-text pull-left">Kelvin Watson (onid: watsokel)</p>
+        </div>
+      </div>
+      
+<!--define modal-->
+<div class="modal fade" id="iModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div style="width:80%;" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <img class="img-responsive" id="mimg" src="">
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/rainbow.min.js"></script>
+<script src="js/generic.js"></script>
+<script src="js/java.js"></script>
+<script>
+
+$(window).load(function(){
+  $('img').on('click',function(){
+      var sr=$(this).attr('src'); 
+      var al=$(this).attr('alt');
+      $('#myModalLabel').text(al);
+      $('#mimg').attr('src',sr);
+      $('#iModal').modal('show');
+  });
+});
+
+</script>
+  </body>
+</html>

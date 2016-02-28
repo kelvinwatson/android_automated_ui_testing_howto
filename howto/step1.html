@@ -31,6 +31,7 @@
                 <li><a href="step2.html">Step 2: Installation</a></li>
                 <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
                 <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li><a href="step5.html">Step 5: Robolectric (Automated UI Testing)</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Other</li>
                 <li><a href="ref.html">References/Further Reading</a></li>
@@ -68,7 +69,7 @@
           <p>In Android, you can perform unit tests locally, or as instrumented unit tests. The following describes the difference between these two types of unit tests:</p>
           <dl class="dl-horizontal">
             <dt>Local unit tests</dt>
-            <dd>These unit tests are independent of the user interface components, and thus do not invoke the Android AVD (virtual device/emulator) or physical device. This means that these tests run quickly.</dd>
+            <dd>These unit tests are independent of the user interface components and run on the Java Virtual Machine (JVM), and thus do not invoke the Android AVD (virtual device/emulator) or physical device. This means that these tests run quickly.</dd>
             <dt>Instrumented unit tests</dt>
             <dd>Unlike local unit tests, instrumented unit tests need to invoke an Android device because they test the Android UI. When you run these tests, you will be prompted to open either an emulator or a physical device. [5]</dd>
           </dl>
@@ -78,7 +79,7 @@
           <p>Manually testing our applications can be a tedious task. Not only is it inefficient, but it is conceivable to miss entire sets of interactions, leading to 
           superficial and incomplete testing of our app. 
           Instead, we can automate the process of interacting with UI elements. Such interactions include tapping, scrolling, flicking etc. To accomplish this, we will use the 
-          Espresso API to simulate user interaction with UI elements.</p>
+          Espresso API and Robolectric API to simulate user interaction with UI elements.</p>
           <p></p>
           
           
@@ -96,14 +97,18 @@
               <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
               <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
               <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
-              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso API Dependencies</a>
+              <a href="step2.html#ro" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Robolectric API Dependencies</a>
               <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
               <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
               <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
               <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
-              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: UI Testing with Espresso API</span></a>  
-              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting in Plain Text</a>
-              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting to HTML</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: Automated UI Integration Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Troubleshooting</a>
+              <a href="step4.html#ch" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Expanding the Calculator Project</a>
+              <a href="step4.html#wr" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+              <a href="step5.html" class="list-group-item" style="background: #222; color:#fff;">STEP 5: Automated UI Integration Testing with Robolectric API</span></a>  
+              <a href="step5.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
             </div>
           </div>
         </div>
@@ -112,7 +117,7 @@
 
       <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
-          <p class="navbar-text pull-left">Kelvin Watson (OSU ID 932540242)</p>
+          <p class="navbar-text pull-left">Kelvin Watson (onid: watsokel)</p>
         </div>
       </div>
 <script src="js/jquery.js"></script>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Android Testing Step 1, How-To Guide</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/syntaxtheme.css">
+    </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a style="color:#CCFB5D" class="navbar-brand" href="index.html">Android Testing How-To Guide</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span> Guide <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">The Guide</li>
+                <li><a href="step1.html">Step 1: Getting Started</a></li>
+                <li><a href="step2.html">Step 2: Installation</a></li>
+                <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
+                <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li><a href="step5.html">Step 5: Robolectric (Automated UI Testing)</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Other</li>
+                <li><a href="ref.html">References/Further Reading</a></li>
+                <li><a href="auth.html">About the webpage author</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="auth.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Automated UI Integration Testing with Robolectric API</h1>
+          <p>This section covers UI testing using the Robolectric API. You now have a good grasp of how to use the various testing tools.</p>
+          <p>Robolectric is similar to the Espresso API in that it also does automated UI testing. However, you'll notice that when you run
+          a Robolectric test, the emulator or physical device is not invoked, meaning that the application doesn't have to go through
+          installation! How can a UI test occur without involving the Dalvik Virtual Machine?
+          Robolectric is set up so that it can run on the JVM, like your JUnit unit tests in step 2. This means that running Robolectric tests are quicker.
+          Robolectric can perform both unit tests and integration tests, and is a great alternative to JUnit local and instrumented tests.</p>
+          <p>Let's begin writing our Robolectric tests:</p>
+          <a id="wr"></a><h2>Writing Robolectric Tests</h2>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/buildvariantr.jpg" alt="Go to Build Variants and select Unit Tests as the Test Artifact"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Select Unit Tests as the Test Artifact in Build Variants, and create a new class called HelloCalculatorRobolectricTest in the test folder. We can place Robolectric under unit tests because it is capable of running integration tests outside of the emulator or physical device, and can also run unit tests.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/configrobo.jpg" alt="Edit Configurations"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">As before, we need to add the test to our Run&#8594;Edit Configurations.</div>
+          </div>
+      
+          <div class="row">
+            <div class="col-md-9"><pre><code data-language="java">@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
+@RunWith(RobolectricGradleTestRunner.class)
+public class HelloCalculatorRobolectricTest {
+  private MainActivity mainActivity;
+  private TextView answer;
+  private Button zero,one,two,three,four,five,six,seven,eight,nine,plus,equals;
+
+  @Before
+  public void setup() {
+    mainActivity=Robolectric.setupActivity(MainActivity.class);
+    answer=(TextView) mainActivity.findViewById(R.id.answerView);
+    zero=(Button)mainActivity.findViewById(R.id.zeroBtn);
+    one=(Button)mainActivity.findViewById(R.id.oneBtn);
+    two=(Button)mainActivity.findViewById(R.id.twoBtn);
+    three=(Button)mainActivity.findViewById(R.id.threeBtn);
+    four=(Button)mainActivity.findViewById(R.id.fourBtn);
+    five=(Button)mainActivity.findViewById(R.id.fiveBtn);
+    six=(Button)mainActivity.findViewById(R.id.sixBtn);
+    seven=(Button)mainActivity.findViewById(R.id.sevenBtn);
+    eight=(Button)mainActivity.findViewById(R.id.eightBtn);
+    nine=(Button)mainActivity.findViewById(R.id.nineBtn);
+    plus=(Button)mainActivity.findViewById(R.id.plusBtn);
+    equals=(Button)mainActivity.findViewById(R.id.equalsBtn);
+    answer=(TextView)mainActivity.findViewById(R.id.answerView);
+  }
+}
+</code></pre>
+            </div>
+            <div class="col-md-3">Let's begin constructing our test class. Notice that we get the references to the activity and buttons by overriding the setUp() function. We need these buttons for each of our tests, so it makes sense to run this before each test.</div>
+          </div>
+
+      
+          <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">    @Test
+public void validateAddition(){
+  //5+8=13
+  five.performClick();
+  plus.performClick();
+  eight.performClick();
+  equals.performClick();
+  assertThat(answer.getText().toString(), equalTo("13"));
+
+  //39+172=211
+  three.performClick();
+  nine.performClick();
+  plus.performClick();
+  one.performClick();
+  seven.performClick();
+  two.performClick();
+  equals.performClick();
+  assertThat(answer.getText().toString(), equalTo("211"));
+
+  //+578=578
+  plus.performClick();
+  five.performClick();
+  seven.performClick();
+  eight.performClick();
+  assertThat(answer.getText().toString(), equalTo("578"));
+}
+</code></pre>
+            </div>
+            <div class="col-md-4">Now, we will write a test that's very similar to the test we wrote in Espresso API, so that you can compare the difference in the code. We'll also add two more additions to make sure our calculator adds properly.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/robolectricrunning.jpg" alt="Cannot resolve withText() or isDisplayed()"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Let's run our tests. You will notice that although the tests are running, Android Studio does not ask you open the application on the emulator or your physical device. This unique feature of Robolectric makes running tests efficient, and possibly faster than instrumented tests.</div>
+          </div>
+          
+           <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">@Test
+public void validateOddSequences(){
+  //++
+  equals.performClick();
+  equals.performClick();
+  assertThat(answer.getText().toString(), anyOf(containsString("+"), containsString("err")));
+
+  //==
+  equals.performClick();
+  equals.performClick();
+  assertThat(answer.getText().toString(), anyOf(containsString("="), containsString("err")));
+
+  //=+
+  equals.performClick();
+  plus.performClick();
+  assertThat(answer.getText().toString(), anyOf(containsString("+"), containsString("="), containsString("err")));
+
+  //+=
+  plus.performClick();
+  equals.performClick();
+  assertThat(answer.getText().toString(), anyOf(containsString("+"), containsString("="), containsString("err")));
+
+  //=23+
+  equals.performClick();
+  two.performClick();
+  three.performClick();
+  assertThat(answer.getText().toString(), anyOf(containsString("23"), containsString("+"), containsString("err")));
+
+}
+</code></pre>
+            </div>
+            <div class="col-md-4">We can add another test that performs atypical sequences of clicks to buttons to make sure that our calculator responds appropriately to invalid input.</div>
+          </div>
+          
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/robolectricpass.jpg" alt="Build and run"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Now, run this test. It should pass as well.</div>
+          </div>
+  
+          <p>Congratulations! We have now written unit tests in JUnit, and integration tests using the Espresso API and Robolectric API. You are on your way to making your Android applications much more robust and resilient.</p>
+        
+        </div>
+   
+        <div class="col-md-4">
+          <div id="sideMenu" style="font-family: Arial, sans-serif;">
+            <div class="panel list-group">
+              <a href="step1.html" class="list-group-item" style="background: #222; color:#fff;">STEP 1: Getting Started</span></a>
+              <a href="step1.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Why test your Android application?</a>
+              <a href="step1.html#unit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Unit Testing</a>
+              <a href="step1.html#integrate" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Integration and UI Testing</a>
+              <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
+              <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
+              <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso API Dependencies</a>
+              <a href="step2.html#ro" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Robolectric API Dependencies</a>
+              <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
+              <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
+              <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
+              <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: Automated UI Integration Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Troubleshooting</a>
+              <a href="step4.html#ch" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Expanding the Calculator Project</a>
+              <a href="step4.html#wr" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+              <a href="step5.html" class="list-group-item" style="background: #222; color:#CCFB5D;">STEP 5: Automated UI Integration Testing with Robolectric API<span class="glyphicon glyphicon-asterisk pull-right"></span></a>  
+              <a href="step5.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <p class="navbar-text pull-left">Kelvin Watson (onid: watsokel)</p>
+        </div>
+      </div>
+      
+<!--define modal-->
+<div class="modal fade" id="iModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div style="width:80%;" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <img class="img-responsive" id="mimg" src="">
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/rainbow.min.js"></script>
+<script src="js/generic.js"></script>
+<script src="js/java.js"></script>
+<script>
+
+$(window).load(function(){
+  $('img').on('click',function(){
+      var sr=$(this).attr('src'); 
+      var al=$(this).attr('alt');
+      $('#myModalLabel').text(al);
+      $('#mimg').attr('src',sr);
+      $('#iModal').modal('show');
+  });
+});
+
+</script>
+  </body>
+</html>

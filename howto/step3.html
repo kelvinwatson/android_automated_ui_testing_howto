@@ -32,6 +32,7 @@
                 <li><a href="step2.html">Step 2: Installation</a></li>
                 <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
                 <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li><a href="step5.html">Step 5: Robolectric (Automated UI Testing)</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Other</li>
                 <li><a href="ref.html">References/Further Reading</a></li>
@@ -50,10 +51,7 @@
       <div class="row">
         <div class="col-md-8">
           <h1>Unit Testing with JUnit</h1>
-          <p>This section covers both local tests and instrumentation tests using JUnit.</p>
-          
-          <a id="loc"></a>
-          
+          <a id="loc"></a><p>This section covers both local tests and instrumentation tests using JUnit.</p>
           
           <h2>Local JUnit Tests</h2>
           <p>As the name of the application suggests, we will be creating a very simple calculator that will take integers and add them together. We will set that up in just a moment.</p>
@@ -66,7 +64,7 @@
           <p>Let's write our first JUnit test.</p>
           <div class="row">
             <div class="col-md-8"><figure><img class="img-responsive" src="images/buildvariant.jpg" alt="Go to Build Variants and select Unit Tests as the Test Artifact"><figcaption>Click image to enlarge</figcaption></figure></div>
-            <div class="col-md-4">Click on Build Variants and select Unit Tests are the Test Artifact.</div>
+            <div class="col-md-4">Click on Build Variants and select Unit Tests as the Test Artifact.</div>
           </div>
           <div class="row">
             <div class="col-md-8"><figure><img class="img-responsive" src="images/dne.jpg" alt="Create a new Java class in the already-created (test) folder in java folder"><figcaption>Click image to enlarge</figcaption></figure></div>
@@ -81,18 +79,18 @@ import static junit.framework.Assert.assertEquals;
 @SmallTest
 public final class HelloCalculatorJUnitTestDNE {
 
-    private MainActivity ma;
+  private MainActivity ma;
 
-    @Before
-    public void setUp() throws Exception {
-        ma = new MainActivity();
-    }
+  @Before
+  public void setUp() throws Exception {
+    ma = new MainActivity();
+  }
 
-    @Test
-    public void testAddIntegers() {
-        int[] arr = {1, 2, 3};
-        assertEquals(6, ma.addIntegers(arr));
-    }
+  @Test
+  public void testAddIntegers() {
+    int[] arr = {1, 2, 3};
+    assertEquals(6, ma.addIntegers(arr));
+  }
 }
 </code></pre>
             </div>
@@ -132,80 +130,94 @@ public final class HelloCalculatorJUnitTestDNE {
           <p></p> 
           <a id="ins"></a>  
           
-          <p></p>
+          <p>Notice that this test did not involve an emulator or physical device. This is because a JUnit test runs on the JVM.</p>
 
           <h2>JUnit Instrumentation Tests</h2>
-          <p>If you've completed installation of Android Studio, you should not have to perform any additional steps to include JUnit. This is because as of version 1.2, JUnit testing is 
-          <a href="http://tools.android.com/tech-docs/unit-testing-support">no longer experimental</a>, and is now 
-          <a href="https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/">fully supported</a> by Android Studio. [6][7]</p>
+          <p>Now that we've written a simple JUnit local unit test, let's turn our attention to the JUnit instrumented test.</p>
+          <p>In contrast to the local JUnit test described above, instrumented tests are tests that run on an emulator or physical device. 
+          Instrumented tests are important for testing methods that need the application's context, such as the onCreate(), onStart(), onResume(), and other
+          methods in an Activity's lifecycle. With instrumented tests, you can get an Activity and call its lifecycle methods.</p>
+          
+          <p>Let's set up our own instrumented test.</p>
+          
           <div class="row">
-            <div class="col-md-5"><img class="img-responsive" src="images/gradle.jpg"></div>
-            <div class="col-md-7">Double click on build.gradle (Module:app) under Gradle Scripts, as shown in the screen capture.</div>
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/instrumented1.jpg" alt="Setting up our first instrumented test"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Set up our first instrumented test by selected Android Instrumented Tests under Build Variants, then create a new class called HelloCalculatorJUnitTest in the test folder as show in the figure.</div>
           </div>
-          <br><p>Then, double check that the JUnit dependency is included.</p>
-          <pre><code data-language="java">dependencies {
-  testCompile "junit:junit:4.12"
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/instrumented2.jpg" alt="Edit configurations"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Before we begin writing our test code, we need to edit the run configurations. Go to Run&#8594;Edit Configurations.</div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/instrumented3.jpg" alt="Edit configurations"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Add a new JUnit test using the green plus sign, and name it HelloCalculatorJUnitTest.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">public class HelloCalculatorJUnitTest extends ActivityInstrumentationTestCase2&lt;MainActivity&gt; {
+  MainActivity ma;
+
+  /**
+   * Required default constructor.
+   */
+  public HelloCalculatorJUnitTest() {
+    //super("com.watsonlogic.hellocalculator", MainActivity.class); DEPRECATED
+    super(MainActivity.class);
+  }
+
+  public HelloCalculatorJUnitTest(Class&lt;MainActivity&gt; activityClass) {
+    super(activityClass);
+  }
+
+  public HelloCalculatorJUnitTest(Class&lt;MainActivity&gt; activityClass, MainActivity ma) {
+    super(activityClass);
+    this.ma = ma;
+  }
+}</code></pre></div>
+            <div class="col-md-4">We're finally ready to write code. Let's start by extending the ActivityInstrumentationTestCase2 class and writing the required constructors. We'll also override the setUp() and tearDown() methods.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">@Test
+public void testAddIntegers() {
+  List&lt;Integer&gt; arr = Arrays.asList(1, 2, 3);
+  assertEquals(6, ma.addIntegers(arr));
+}</code></pre></div>
+            <div class="col-md-4">Now let's write a test method that's similar to the unit test we write above.</div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/instrumented4.jpg" alt="Edit configurations"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Let's try to run it.</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/instrumented5.jpg" alt="Edit configurations"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Oops, this threw an exception. Why? Because this is an instrumentation test, it requires the UI. Instead, we need to run it from the left menu. You will be prompted to open the app on the emulator or physical device.</div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8"><pre><code data-language="java">@UiThreadTest
+public void testButtons(){
+  final Button one = (Button)ma.findViewById(R.id.oneBtn);
+  one.performClick();
+  final TextView answer = (TextView)ma.findViewById(R.id.answerView);
+  assertEquals("1", answer.getText().toString());
 }</code></pre>
-          
-          <p>You are now ready to create local and instrumentation JUnit tests. Before we write our first test, let's set up the Espresso API so that we have it on hand for our UI tests.</p>
-          <aside>As an aside, if you're not familiar with dependencies, they are basically Android (Java) JAR files that the project requires. You can think of dependencies as  [8][9]</aside>
-          <a id="es"></a><h2>Espresso API</h2>
-          <p>Personally, I found the documentation on Espresso API website inadequate. During the setup process, I encountered several dependency and Gradle build issues, even when I followed the setup instructions 
-          verbatim. Support for these installation issues was nowhere to be found on the <a href="https://google.github.io/android-testing-support-library/docs/espresso/" target="_blank">Android Testing Support Library</a> website. 
-          Because of said issues, it is my opinion that the official documentation is lacking in terms of support for errors during setup.</p>
-          <p>As suggested in the official documentation, add these dependencies in the same build.gradle (Module:app) as before when we set up JUnit. You can use either single or double quotes for the dependency.</p>
-          <pre><code data-language="java">dependencies {
-  androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.1"
-  androidTestCompile "com.android.support.test:runner:0.4.1"
-}</code></pre>
+</div>
+            <div class="col-md-4">Now, to illustrate the difference between a local unit test that runs on the JVM and this instrumented test, let's try to interact with the UI. This test interacts with the UI, so we must annotate it with @UiThreadTest</div>
+          </div>
 
-          <p>After following the above instruction, you'll be prompted to perform a sync. Click on <u>Sync Now</u>.
-          <img class="img-responsive" src="images/sync.jpg"></p>
-          
-          <p>At this point, I encountered an error which was not noted in the official documentation: 
-          <pre><span class="red">Warning:Conflict with dependency 'com.android.support:support-annotations'. Resolved versions for app (23.1.1) and test app (23.0.1) differ. See http://g.co/androidstudio/app-test-app-conflict for details.</span></pre></p>
-                    
-          <p>Why are we seeing this error message? This error indicates a conflict between your application's APK and the test application's APK. <em>(APK stands for Android application package, which is the file that's distributed for installation on Android devices. When you're finished
-          developing your app, you would build an APK file for distribution)</em> [10]. Because both your app APK and test APK must use the same version of the Android API. So, if I look in the lines within dependencies, I will see the following line:
-          <pre><code data-language="java">compile "com.android.support:appcompat-v7:23.1.1"</code></pre> This is a hint to use version 23.1.1 in my support annotations.
+          <div class="row">
+            <div class="col-md-8"><figure><img class="img-responsive" src="images/instrumented4.jpg" alt="Edit configurations"><figcaption>Click image to enlarge</figcaption></figure></div>
+            <div class="col-md-4">Run all of your tests, they should pass!</div>
+          </div>
+  
+          <p>Congratulations! We have now written both local and instrumented unit tests! Let's move on to the more complicated topic of integration testing.</p>
 
-          <p>To resolve this conflict, I added the following dependency:
-          <pre><code data-language="java">androidTestCompile "com.android.support:support-annotations:23.1.1"</code></pre>Not surprisingly, this fixes the issue!
-          </p>
-
-          <p>Next, the official documentation requests that you add this under the defaultConfig bracket:
-          <pre><code data-language="java">testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"</code></pre></p>
-
-          <p>Your gradle.build (Module:app) file should look something like this: 
-          <pre><code data-language="java">apply plugin: 'com.android.application'
-
-android {
-    compileSdkVersion 22
-    buildToolsVersion "22"
-
-    defaultConfig {
-        applicationId "com.my.awesome.app"
-        minSdkVersion 10
-        targetSdkVersion 22.0.1
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-}
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    // App's dependencies, including test
-    androidTestCompile 'com.android.support:support-annotations:23.1.1'
-    // Testing-only dependencies
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
-}</code></pre>At this point, the official documentation shows the following example of the build.gradle file, which implies that everything should be correctly setup. However, we will see later when we try to write and run our tests that we will
-    encounter some difficulty. But, have no fear, in Step 3, I will show you how to fix all of these issues so we can be up and running!</p> 
-
-          
-          <h2><a href="step2.html">&raquo; Proceed to Step 3: Unit Testing with JUnit</a></h2>
+          <h2><a href="step4.html">&raquo; Proceed to Step 4: Integration Testing using the Espresso API</a></h2>
         </div>
         <div class="col-md-4">
           <div id="sideMenu" style="font-family: Arial, sans-serif;">
@@ -214,18 +226,22 @@ dependencies {
               <a href="step1.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Why test your Android application?</a>
               <a href="step1.html#unit" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Unit Testing</a>
               <a href="step1.html#integrate" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Integration and UI Testing</a>
-              <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment<span class="glyphicon glyphicon-asterisk pull-right"></span></a>
+              <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
               <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
               <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
-              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
-              <a href="step3.html" class="list-group-item" style="background: #222; color:#CCFB5D;">STEP 3: Unit Testing with JUnit</span></a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso API Dependencies</a>
+              <a href="step2.html#ro" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Robolectric API Dependencies</a>
+              <a href="step3.html" class="list-group-item" style="background: #222; color:#CCFB5D;">STEP 3: Unit Testing with JUnit<span class="glyphicon glyphicon-asterisk pull-right"></span></a>
               <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
               <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
               <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
-              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: UI Testing with Espresso API</span></a>  
-              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting in Plain Text</a>
-              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting to HTML</a>
-            </div>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: Automated UI Integration Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Troubleshooting</a>
+              <a href="step4.html#ch" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Expanding the Calculator Project</a>
+              <a href="step4.html#wr" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+              <a href="step5.html" class="list-group-item" style="background: #222; color:#fff;">STEP 5: Automated UI Integration Testing with Robolectric API</span></a>  
+              <a href="step5.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+           </div>
           </div>
         </div>
       </div>
@@ -233,7 +249,7 @@ dependencies {
 
       <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
-          <p class="navbar-text pull-left">Kelvin Watson (OSU ID 932540242)</p>
+          <p class="navbar-text pull-left">Kelvin Watson (onid: watsokel)</p>
         </div>
       </div>
       

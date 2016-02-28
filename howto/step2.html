@@ -32,6 +32,7 @@
                 <li><a href="step2.html">Step 2: Installation</a></li>
                 <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
                 <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li><a href="step5.html">Step 5: Robolectric (Automated UI Testing)</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Other</li>
                 <li><a href="ref.html">References/Further Reading</a></li>
@@ -125,12 +126,12 @@ toastBtn.setOnClickListener(new View.OnClickListener() {
     public void onClick(View v) {
         Toast.makeText(MainActivity.this, "Clicked Toast Button!", Toast.LENGTH_SHORT).show();
     }
-});</code></pre></div>
+});</code></pre><a id="ju"></a></div>
             <div class="col-md-3">Add the following code to the MainActivity's onCreate() method.</div>
           </div>
           
           
-          <a id="ju"></a><h2>JUnit Installation</h2>
+          <h2>JUnit Installation</h2>
           <p>If you've completed installation of Android Studio, you should not have to perform any additional steps to include JUnit. This is because as of version 1.2, JUnit testing is 
           <a href="http://tools.android.com/tech-docs/unit-testing-support">no longer experimental</a>, and is now 
           <a href="https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/">fully supported</a> by Android Studio. [6][7]</p>
@@ -152,8 +153,8 @@ toastBtn.setOnClickListener(new View.OnClickListener() {
 }</code></pre>
           
           <p>You are now ready to create local and instrumentation JUnit tests. Before we write our first test, let's set up the Espresso API so that we have it on hand for our UI tests.</p>
-          <aside>As an aside, if you're not familiar with dependencies, they are basically Android (Java) JAR files that the project requires. You can think of dependencies as  [8][9]</aside>
-          <a id="es"></a><h2>Espresso API</h2>
+          <aside><a id="es"></a>As an aside, if you're not familiar with dependencies, they are basically Android (Java) JAR files that the project requires. You can think of dependencies as  [8][9]</aside>
+          <h2>Espresso API</h2>
           <p>Personally, I found the documentation on Espresso API website inadequate. During the setup process, I encountered several dependency and Gradle build issues, even when I followed the setup instructions 
           verbatim. Support for these installation issues was nowhere to be found on the <a href="https://google.github.io/android-testing-support-library/docs/espresso/" target="_blank">Android Testing Support Library</a> website. 
           Because of said issues, it is my opinion that the official documentation is lacking in terms of support for errors during setup.</p>
@@ -208,7 +209,14 @@ dependencies {
 }</code></pre>At this point, the official documentation shows the following example of the build.gradle file, which implies that everything should be correctly setup. However, we will see later when we try to write and run our tests that we will
     encounter some difficulty. But, have no fear, in Step 3, I will show you how to fix all of these issues so we can be up and running!</p> 
 
-          
+        <a id="ro"></a><h2>Robolectric Installation</h2>
+        <p>Finally, let's install Robolectric. In my opiniion, this one is by far the easiest one to install and requires the least dependencies.</p>
+
+        <p>In your application's build.gradle dependencies, add the following: 
+        <pre><code data-language="java">testCompile "org.robolectric:robolectric:3.0"</code></pre></p>
+
+        <p>With installation complete, we can begin writing our tests.</p>
+
         <h2><a href="step3.html">&raquo; Proceed to Step 3: Unit Testing with JUnit</a></h2>
         </div>
         <div class="col-md-4">
@@ -221,14 +229,18 @@ dependencies {
               <a href="step2.html" class="list-group-item" style="background: #222; color:#CCFB5D;">STEP 2: Setting Up Your Environment<span class="glyphicon glyphicon-asterisk pull-right"></span></a>
               <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
               <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
-              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso API Dependencies</a>
+              <a href="step2.html#ro" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Robolectric API Dependencies</a>
               <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
               <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
               <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
               <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
-              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: UI Testing with Espresso API</span></a>  
-              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting in Plain Text</a>
-              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting to HTML</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: Automated UI Integration Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Troubleshooting</a>
+              <a href="step4.html#ch" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Expanding the Calculator Project</a>
+              <a href="step4.html#wr" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+              <a href="step5.html" class="list-group-item" style="background: #222; color:#fff;">STEP 5: Automated UI Integration Testing with Robolectric API</span></a>  
+              <a href="step5.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
             </div>
           </div>
         </div>
@@ -238,7 +250,7 @@ dependencies {
   
     <div class="navbar navbar-default navbar-fixed-bottom">
       <div class="container">
-        <p class="navbar-text pull-left">Kelvin Watson (OSU ID 932540242)</p>
+        <p class="navbar-text pull-left">Kelvin Watson (onid: watsokel)</p>
       </div>
     </div>
 

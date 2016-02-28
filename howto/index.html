@@ -22,7 +22,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span> Guide <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -31,6 +31,7 @@
                 <li><a href="step2.html">Step 2: Installation</a></li>
                 <li><a href="step3.html">Step 3: JUnit (Unit Testing)</a></li>
                 <li><a href="step4.html">Step 4: Espresso (Automated UI Testing)</a></li>
+                <li><a href="step5.html">Step 5: Robolectric (Automated UI Testing)</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Other</li>
                 <li><a href="ref.html">References/Further Reading</a></li>
@@ -51,11 +52,11 @@
           <div class="jumbotron" id="bgImg">
             <div id="opaqueBg" style="font-family: 'Open Sans', sans-serif;">
               <h1>Android Testing<br></h1><h2>A How-To Guide</h2>
-              <p>This guide will show you how to test an Android application using JUnit and Espresso</p>
+              <p>This guide will show you how to test an Android application using the <strong>JUnit</strong>, <strong>Espresso</strong> and <strong>Robolectric</strong> API's</p>
             </div>
           </div>
             <dl>
-              <dt>Why did I write this how-to guide?</dt>
+              <dt><h2>Why did I write this how-to guide?</h2></dt>
               <dd>I wrote this guide for a couple of important reasons.<br><br>
               
               While the Android Developer and Android Testing Support library websites provide some documentation 
@@ -70,15 +71,31 @@
               working knowledge of how to write tests for Android applications. This is a great opportunity to review the basics of writing unit tests, and 
               provide some exposure to automated UI and integration testing. Thus, another goal of this guide is to help developers quickly get started
               on writing quality tests for their Android apps.
-              <dt><br>Features</dt>
+              <dt><h2>Features</h2></dt>
               <dd>This is a how-to guide on testing Android applications. It includes steps on the installation, writing, and execution of tests using: 
-              <ul>
-                <li><img style="max-height:1em;" src="images/junit-logo.png"> JUnit for unit testing</li>
-                <li><img style="max-height:1.5em;" src="images/espresso-logo.png"> Espresso API for integration testing of the UI</li>
+              <ul class="list-unstyled">
+                <li>
+                  <div class="row">
+                    <div class="col-md-4" style="height:3em; text-align:center;"><img style="max-width:100%;max-height:100%;" src="images/junit-logo.png"></div>
+                    <span class="col-md-8">JUnit API for local and instrumented unit testing</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="row">
+                    <div class="col-md-4" style="height:6em; text-align:center;"><img style="display:inline;max-width:100%;max-height:100%;" src="images/espresso-logo.png"></div>
+                    <div class="col-md-8">Espresso API for automated integration testing of the UI</div>
+                  </div>
+                </li>
+                <li>
+                  <div class="row">
+                    <div class="col-md-4" style="height:4.5em; text-align:center;"><img style="display:inline;max-width:100%;max-height:100%;" src="images/robolectric-logo"></div>
+                    <div class="col-md-8">Robolectric API for automated integration testing of the UI</div>
+                  </div>               
+                </li>
               </ul></dd>
-              <dt>Documentation</dt>
+              <dt><h2>Documentation</h2></dt>
               <dd>Where appropriate, this guide will link to official documentation to provide background information.<br><br></dd>
-              <dt>Requirements</dt>
+              <dt><h2>Requirements</h2></dt>
               <dd>This guide assumes basic knowledge of native Android development in Android Studio, 
               but assumes no experience in setting up JUnit and Espresso in Android Studio, or testing an Android application.<br><br></dd>
             </dl>
@@ -94,21 +111,25 @@
               <a href="step2.html" class="list-group-item" style="background: #222; color:#fff;">STEP 2: Setting Up Your Environment</a>
               <a href="step2.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Android Studio</a>
               <a href="step2.html#ju" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing JUnit and Dependencies</a>
-              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso Dependencies</a>
+              <a href="step2.html#es" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Espresso API Dependencies</a>
+              <a href="step2.html#ro" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Installing Robolectric API Dependencies</a>
               <a href="step3.html" class="list-group-item" style="background: #222; color:#fff;">STEP 3: Unit Testing with JUnit</span></a>
               <a href="step3.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Set Up Test Project</a>
               <a href="step3.html#loc" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Local JUnit Tests</a>
               <a href="step3.html#ins" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> JUnit Instrumentation Tests</a>
-              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: UI Testing with Espresso API</span></a>  
-              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting in Plain Text</a>
-              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Outputting to HTML</a>
+              <a href="step4.html" class="list-group-item" style="background: #222; color:#fff;">STEP 4: Automated UI Integration Testing with Espresso API</span></a>  
+              <a href="step4.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Troubleshooting</a>
+              <a href="step4.html#ch" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Expanding the Calculator Project</a>
+              <a href="step4.html#wr" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
+              <a href="step5.html" class="list-group-item" style="background: #222; color:#fff;">STEP 5: Automated UI Integration Testing with Robolectric API</span></a>  
+              <a href="step5.html" class="list-group-item small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> Writing Tests</a>
             </div>
           </div>
         </div>
       </div>
       <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
-          <p class="navbar-text pull-left">Kelvin Watson (ONID: watsokel)</p>
+          <p class="navbar-text pull-left">Kelvin Watson (onid: watsokel)</p>
         </div>
       </div>
     </div>
